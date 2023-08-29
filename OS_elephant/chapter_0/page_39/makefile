@@ -1,4 +1,4 @@
-run:
+build:
 	./check.sh
 
 .PHONY:
