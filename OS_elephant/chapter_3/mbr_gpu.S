@@ -7,7 +7,7 @@ SECTION MBR vstart=0x7c00
    mov ss, ax
    mov fs, ax
    mov sp, 0x7c00
-   mov ax, 0b800h
+   mov ax, 0b800h ; 设置显存
    mov gs, ax
 
 ; 清屏 利用0x06号功能，上卷全部行，则可清屏。
@@ -31,21 +31,40 @@ SECTION MBR vstart=0x7c00
 			            ; 下标是从0开始, 所以设置`dh`存储的值为0x18=24, 而`dl`中的是0x4f=79
    int 0x10          ; int 0x10
 
-;;;;;;;;;;     使用显存显示  ;;;;;;;;;;;
-   mov byte [gs: 00h], '1'
-   mov byte [gs: 01h], 10100100b
+;;;;;;;;;;     使用显存文本模式显示  ;;;;;;;;;;;
+   mov byte [gs: 00h], 'H'
+   mov byte [gs: 01h], 00010100b ; 不闪烁 背景蓝色 字体红色 这里使用二进制方便对应`rgb`字符显示表
 
-   mov byte [gs: 02h], ' '
-   mov byte [gs: 03h], 10100100b
+   mov byte [gs: 02h], 'E'
+   mov byte [gs: 03h], 10101100b ; 闪烁 背景绿色 字体浅红色
 
-   mov byte [gs: 04h], 'M'
+   mov byte [gs: 04h], 'L'
    mov byte [gs: 05h], 10100100b
 
-   mov byte [gs: 06h], 'B'
+   mov byte [gs: 06h], 'L'
    mov byte [gs: 07h], 10100100b
 
-   mov byte [gs: 08h], 'R'
+   mov byte [gs: 08h], 'O'
    mov byte [gs: 09h], 10100100b
+
+   mov byte [gs: 0ah], ' '
+   mov byte [gs: 0bh], 10100100b
+
+   mov byte [gs: 0ch], 'W'
+   mov byte [gs: 0dh], 10100100b
+
+   mov byte [gs: 0eh], 'O'
+   mov byte [gs: 0fh], 10100100b
+
+   mov byte [gs: 10h], 'R'
+   mov byte [gs: 11h], 10100100b
+
+   mov byte [gs: 12h], 'L'
+   mov byte [gs: 13h], 10100100b
+
+   mov byte [gs: 14h], 'D'
+   mov byte [gs: 15h], 10100100b
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;rsor获取当前光标位置, 在光标位置处打印字符.
@@ -75,6 +94,6 @@ SECTION MBR vstart=0x7c00
 
    jmp $		         ; 使程序悬停在此
 
-   message db "1 MBR"
+;   message db "1 MBR"
    times 510-($-$$) db 0 ; 使用`0`填充, 使整体达到512字节大小, 这里用510进行计算的原因是还要在最后留2字节的结束标志
    db 0x55, 0xaa     ; 最后两字节的结束标志
