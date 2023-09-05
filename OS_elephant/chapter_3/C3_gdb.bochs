@@ -9,11 +9,11 @@ megs: 32
 # 第二步, 设置对应真实机器的 BIOS 和 VGA BIOS
 # 注意路径需要填写`Bochs`的绝对安装路径, 既需要根据实际情况修改
 # 对应两个关键字为：romimage 和 vgaromimage
-#romimage: file=/home/woodholz/bochs_gdb/share/bochs/BIOS-bochs-latest
-#vgaromimage: file=/home/woodholz/bochs_gdb/share/bochs/VGABIOS-lgpl-latest
+#romimage: file=/usr/bin/bochs/share/bochs/BIOS-bochs-latest
+#vgaromimage: file=/usr/bin/bochs/share/bochs/VGABIOS-lgpl-latest
 
-romimage: file=/home/Arch_wsl/bochs_gdb/share/bochs/BIOS-bochs-latest
-vgaromimage: file=/home/Arch_wsl/bochs_gdb/share/bochs/VGABIOS-lgpl-latest
+romimage: file=/usr/bin/bochs_gdb/share/bochs/BIOS-bochs-latest
+vgaromimage: file=/usr/bin/bochs_gdb/share/bochs/VGABIOS-lgpl-latest
 
 # 第三步, 设置 Bochs 所使用的磁盘, 软盘的关键字为 floppy(可以跳过)
 # 若只有一个软盘, 则使用 floppya 即可, 若有多个, 则为 floppya, floppyb…
@@ -35,8 +35,8 @@ log: bochs.out
 mouse: enabled=0
 
 # 打开键盘
-#keyboard: keymap=/home/woodholz/bochs_gdb/share/bochs/keymaps/x11-pc-us.map
-keyboard: keymap=/home/Arch_wsl/bochs_gdb/share/bochs/keymaps/x11-pc-us.map
+#keyboard: keymap=/usr/bin/bochs/share/bochs/keymaps/x11-pc-us.map
+keyboard: keymap=/usr/bin/bochs_gdb/share/bochs/keymaps/x11-pc-us.map
 
 # 硬盘设置 
 ## 设置`ATA`控制器`0`

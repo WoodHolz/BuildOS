@@ -13,9 +13,9 @@ megs: 32
 #romimage: file=/home/work/bochs/share/bochs/BIOS-bochs-latest
 #vgaromimage: file=/home/work/bochs/share/bochs/VGABIOS-lgpl-latest
 #romimage: file=/usr/local//Cellar/bochs/2.6.1/share/bochs/BIOS-bochs-latest
-romimage: file=/home/arch_wsl/bochs_gdb/share/bochs/BIOS-bochs-latest
+romimage: file=/usr/bin/bochs_gdb/share/bochs/BIOS-bochs-latest
 #vgaromimage: file=/usr/local//Cellar/bochs/2.6.1/share/bochs/VGABIOS-lgpl-latest
-vgaromimage: file=/home/arch_wsl/bochs_gdb/share/bochs/VGABIOS-lgpl-latest
+vgaromimage: file=/usr/bin/bochs_gdb/share/bochs/VGABIOS-lgpl-latest
 
 # 第三步，设置Bochs所使用的磁盘，软盘的关键字为floppy。
 # 若只有一个软盘，则使用floppya即可，若有多个，则为floppya，floppyb...
@@ -33,7 +33,7 @@ log: bochs.out
 mouse: enabled=0
 #keyboard_mapping: enabled=1, map=/home/work/bochs/share/bochs/keymaps/x11-pc-us.map
 #keyboard_mapping: enabled=1, map=/usr/local//Cellar/bochs/2.6.8/share/bochs/keymaps/x11-pc-us.map
-keyboard:keymap=/home/arch_wsl/bochs_gdb/share/bochs/keymaps/x11-pc-us.map
+keyboard:keymap=/usr/bin/bochs_gdb/share/bochs/keymaps/x11-pc-us.map
 
 
 # 硬盘设置 
