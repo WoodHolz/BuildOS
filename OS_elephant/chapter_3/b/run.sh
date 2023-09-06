@@ -1,3 +1,3 @@
 #!/bin/bash 
 echo "run........"
-bochs -f bochsrc.disk
+bochs_gdb -f C3_b_gdb.bochs
