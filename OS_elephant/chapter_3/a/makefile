@@ -8,7 +8,7 @@ img: ${OBJS_BIN}
 	dd if=$(OBJS_BIN) of=hd60M.img bs=512 count=1 conv=notrunc
 
 run: img
-	bochs_gdb -f C3_arch_wsl.bochs
+	bochs_gdb -f C3_gdb.bochs
 
 clean:
 	rm -rf *.img  *.out *.lock *.bin 
