@@ -23,17 +23,30 @@ SECTION MBR vstart=0x7c00
 ;(CL,CH) = 窗口左上角的(X,Y)位置
 ;(DL,DH) = 窗口右下角的(X,Y)位置
 ;无返回值：
-   mov ax, 0x600     ; ah: 06h al: 00h(置零0️⃣ )
-   mov bx, 0x700     ; bh: 07h bl: 00h(置零0️⃣ )
-   mov cx, 0         ; ch: 00h cl: 00h 左上角: (0, 0)
-   ; mov dx, 0x184f  ; 与下面两行结果相同, 为了方便理解把dl, dh的赋值分两步
-   mov dl, 0x4f
-   mov dh, 0x18	   ; dh: 18h dl: 4fh 右下角: (80, 25), 
-			            ; VGA文本模式中, 一行只能容纳80个字符, 共25行。
-			            ; 下标是从0开始, 所以设置`dh`存储的值为0x18=24, 而`dl`中的是0x4f=79
-   int 0x10          ; int 0x10
+   mov     ax, 0600h
+   mov     bx, 0700h
+   mov     cx, 0                   ; 左上角: (0, 0)
+   mov     dx, 184fh		   ; 右下角: (80,25),
+				   ; 因为VGA文本模式中，一行只能容纳80个字符,共25行。
+				   ; 下标从0开始，所以0x18=24,0x4f=79
+   int     10h                     ; int 10h
 
    ; 输出字符串:MBR
+;    mov byte [gs:0x00],'1'
+;    mov byte [gs:0x01],0xA4
+
+;    mov byte [gs:0x02],' '
+;    mov byte [gs:0x03],0xA4
+
+;    mov byte [gs:0x04],'M'
+;    mov byte [gs:0x05],0xA4	   ;A表示绿色背景闪烁，4表示前景色为红色
+
+;    mov byte [gs:0x06],'B'
+;    mov byte [gs:0x07],0xA4
+
+;    mov byte [gs:0x08],'R'
+;    mov byte [gs:0x09],0xA4
+	 
    mov byte [gs: 00h], 'H'
    mov byte [gs: 01h], 00010100b ; 不闪烁 背景蓝色 字体红色 这里使用二进制方便对应`rgb`字符显示表
 
@@ -66,10 +79,10 @@ SECTION MBR vstart=0x7c00
 
    mov byte [gs: 14h], 'D'
    mov byte [gs: 15h], 10100100b
-	 
+
    mov eax,LOADER_START_SECTOR	 ; 起始扇区lba地址
-   mov bx,LOADER_BASE_ADDR       ; 把加载器写入到内存的地址
-   mov cx,1			 ; 待读入的扇区数
+   mov bx,LOADER_BASE_ADDR       ; 写入的地址
+   mov cx,4			 ; 待读入的扇区数
    call rd_disk_m_16		 ; 以下读取程序的起始部分（一个扇区）
   
    jmp LOADER_BASE_ADDR

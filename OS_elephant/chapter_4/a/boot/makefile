@@ -1,0 +1,1 @@
+OJBIN=$(wildcard *.bin)
