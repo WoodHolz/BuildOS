@@ -1,7 +1,6 @@
 #!/bin/bash
 if [ ! -d "./out" ]; then
       mkdir out
-OS
 fi
 if [ -e "OS.img" ]; then
       rm -rf OS.img  

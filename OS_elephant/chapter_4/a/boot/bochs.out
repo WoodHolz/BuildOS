@@ -30,7 +30,7 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe
-00000000000i[MEM0 ] allocated memory at 0x7f6c3ba8c010. after alignment, vector=0x7f6c3ba8d000
+00000000000i[MEM0 ] allocated memory at 0x7fb873616010. after alignment, vector=0x7fb873617000
 00000000000i[MEM0 ] 32.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/usr/bin/bochs/share/bochs/BIOS-bochs-latest')
@@ -40,7 +40,7 @@
 00000000000i[DEV  ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
 00000000000i[     ] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Sun Sep 17 21:13:31 2023 (time0=1694956411)
+00000000000i[CMOS ] Setting initial clock to: Thu Sep 21 15:43:57 2023 (time0=1695282237)
 00000000000i[     ] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[     ] init_dev of 'pic' plugin device by virtual method
@@ -68,8 +68,7 @@
 00000000000i[     ] init_dev of 'harddrv' plugin device by virtual method
 00000000000i[HD   ] HD on ata0-0: 'OS.img', 'flat' mode
 00000000000i[IMG  ] hd_size: 3096576
-00000000000i[HD   ] ata0-0: using specified geometry: CHS=121/16/63
-00000000000p[HD   ] >>PANIC<< ata0-0: specified geometry doesn't fit on disk image
+00000000000i[HD   ] ata0-0: using specified geometry: CHS=6/16/63
 00000000000i[HD   ] translation on ata0-0 set to 'none'
 00000000000i[HD   ] Using boot sequence disk, none, none
 00000000000i[HD   ] Floppy boot signature check is enabled
@@ -189,29 +188,30 @@
 00001529158i[BXVGA] VBE known Display Interface b0c5
 00001532083i[VBIOS] VBE Bios $Id: vbe.c,v 1.64 2011/07/19 18:25:05 vruppert Exp $
 00001600000i[XGUI ] charmap update. Font Height is 16
-00001871695i[BIOS ] ata0-0: PCHS=121/16/63 translation=none LCHS=121/16/63
-00005748869i[BIOS ] IDE time out
-00017824347i[BIOS ] Booting from 0000:7c00
-01944939304i[     ] Ctrl-C detected in signal handler.
-01944939304i[XGUI ] Mouse capture off
-01944939304i[     ] dbg: Quit
-01944939304i[CPU0 ] CPU is in protected mode (active)
-01944939304i[CPU0 ] CS.mode = 32 bit
-01944939304i[CPU0 ] SS.mode = 32 bit
-01944939304i[CPU0 ] EFER   = 0x00000000
-01944939304i[CPU0 ] | EAX=60000018  EBX=0000001f  ECX=00090011  EDX=00001800
-01944939304i[CPU0 ] | ESP=00000900  EBP=00000b09  ESI=00000002  EDI=00000004
-01944939304i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af PF cf
-01944939304i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
-01944939304i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
-01944939304i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-01944939304i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-01944939304i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-01944939304i[CPU0 ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-01944939304i[CPU0 ] |  GS:0018( 0003| 0|  0) 000b8000 00007fff 1 1
-01944939304i[CPU0 ] | EIP=00000bc5 (00000bc5)
-01944939304i[CPU0 ] | CR0=0x60000011 CR2=0x00000000
-01944939304i[CPU0 ] | CR3=0x00000000 CR4=0x00000000
-01944939304i[CMOS ] Last time is 1694956897 (Sun Sep 17 21:21:37 2023)
-01944939304i[XGUI ] Exit
-01944939304i[CTRL ] quit_sim called with exit code 0
+00001871391i[BIOS ] ata0-0: PCHS=6/16/63 translation=none LCHS=6/16/63
+00005748565i[BIOS ] IDE time out
+00017824343i[BIOS ] Booting from 0000:7c00
+01057639136i[     ] Ctrl-C detected in signal handler.
+01057639137i[XGUI ] Mouse capture off
+01057639137i[XGUI ] Mouse capture off
+01057639137i[     ] dbg: Quit
+01057639137i[CPU0 ] CPU is in protected mode (active)
+01057639137i[CPU0 ] CS.mode = 32 bit
+01057639137i[CPU0 ] SS.mode = 32 bit
+01057639137i[CPU0 ] EFER   = 0x00000000
+01057639137i[CPU0 ] | EAX=60000018  EBX=0000001f  ECX=00090011  EDX=00001800
+01057639137i[CPU0 ] | ESP=00000900  EBP=00000b09  ESI=00000002  EDI=00000004
+01057639137i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf zf af PF cf
+01057639137i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+01057639137i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+01057639137i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+01057639137i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+01057639137i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+01057639137i[CPU0 ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+01057639137i[CPU0 ] |  GS:0018( 0003| 0|  0) 000b8000 00007fff 1 1
+01057639137i[CPU0 ] | EIP=00000b68 (00000b68)
+01057639137i[CPU0 ] | CR0=0x60000011 CR2=0x00000000
+01057639137i[CPU0 ] | CR3=0x00000000 CR4=0x00000000
+01057639137i[CMOS ] Last time is 1695282501 (Thu Sep 21 15:48:21 2023)
+01057639137i[XGUI ] Exit
+01057639137i[CTRL ] quit_sim called with exit code 0

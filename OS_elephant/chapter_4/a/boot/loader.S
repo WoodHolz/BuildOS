@@ -31,31 +31,31 @@
 
    loader_start:
 
-;打印字符，"2 LOADER"说明loader已经成功加载
-; 输出背景色绿色，前景色红色，并且跳动的字符串"2 LOADER"
-mov byte [gs:160],'2'
-mov byte [gs:161],0xA4     ; A表示绿色背景闪烁，4表示前景色为红色
+; ;打印字符，"2 LOADER"说明loader已经成功加载
+; ; 输出背景色绿色，前景色红色，并且跳动的字符串"2 LOADER"
+; mov byte [gs:160],'2'
+; mov byte [gs:161],0xA4     ; A表示绿色背景闪烁，4表示前景色为红色
 
-mov byte [gs:162],' '
-mov byte [gs:163],0xA4
+; mov byte [gs:162],' '
+; mov byte [gs:163],0xA4
 
-mov byte [gs:164],'L'
-mov byte [gs:165],0xA4   
+; mov byte [gs:164],'L'
+; mov byte [gs:165],0xA4   
 
-mov byte [gs:166],'O'
-mov byte [gs:167],0xA4
+; mov byte [gs:166],'O'
+; mov byte [gs:167],0xA4
 
-mov byte [gs:168],'A'
-mov byte [gs:169],0xA4
+; mov byte [gs:168],'A'
+; mov byte [gs:169],0xA4
 
-mov byte [gs:170],'D'
-mov byte [gs:171],0xA4
+; mov byte [gs:170],'D'
+; mov byte [gs:171],0xA4
 
-mov byte [gs:172],'E'
-mov byte [gs:173],0xA4
+; mov byte [gs:172],'E'
+; mov byte [gs:173],0xA4
 
-mov byte [gs:174],'R'
-mov byte [gs:175],0xA4
+; mov byte [gs:174],'R'
+; mov byte [gs:175],0xA4
 
 
 
@@ -104,8 +104,8 @@ mov byte [gs:175],0xA4
    or eax, 0x00000001
    mov cr0, eax
 
-   ;jmp dword SELECTOR_CODE:p_mode_start	     ; 刷新流水线，避免分支预测的影响,这种cpu优化策略，最怕jmp跳转，
-   jmp  SELECTOR_CODE:p_mode_start	            ; 刷新流水线，避免分支预测的影响,这种cpu优化策略，最怕jmp跳转，
+   jmp dword SELECTOR_CODE:p_mode_start	     ; 刷新流水线，避免分支预测的影响,这种cpu优化策略，最怕jmp跳转，
+   ;jmp  SELECTOR_CODE:p_mode_start	            ; 刷新流水线，避免分支预测的影响,这种cpu优化策略，最怕jmp跳转，
                                                 ; 这将导致之前做的预测失效，从而起到了刷新的作用。
 
 [bits 32]
@@ -118,6 +118,6 @@ p_mode_start:
    mov ax, SELECTOR_VIDEO
    mov gs, ax
 
-   mov byte [gs:320], 'P'
+   mov byte [gs:160], 'P'
 
    jmp $
