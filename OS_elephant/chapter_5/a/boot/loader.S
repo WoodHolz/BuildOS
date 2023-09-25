@@ -39,7 +39,7 @@
    loader_start:
    
 ;-------  int 15h eax = 0000E820h ,edx = 534D4150h ('SMAP') 获取内存布局  -------
-;es:di存放缓冲区地址，es在mbr中已经赋值了(0)，45行队di赋值。
+;es:di存放缓冲区地址，es在mbr中已经赋值了(0)，45行对di赋值。
    xor ebx, ebx		      ;第一次调用时，ebx值要为0
    mov edx, 0x534d4150	      ;edx只赋值一次，循环体中不会改变 固定签名，16进制数字字符串是SMAP的ASCII
    mov di, ards_buf	      ;ards结构缓冲区
@@ -47,7 +47,7 @@
    mov eax, 0x0000e820	      ;执行int 0x15后,eax值变为0x534d4150,所以每次执行int前都要更新为子功能号。
    mov ecx, 20		      ;ARDS地址范围描述符结构大小是20字节 每次执行完ecx会改变，所以每次都需要给ecx重新赋值
    int 0x15
-   jc .e820_failed_so_try_e801   ;若cf位为1则有错误发生，尝试0xe801子功能
+   ;jc .e820_failed_so_try_e801   ;若cf位为1则有错误发生，尝试0xe801子功能
    add di, cx		      ;使di增加20字节指向缓冲区中新的ARDS结构位置
    inc word [ards_nr]	      ;记录ARDS数量  每次得到一个ARDS后，便将ards_nr加1,记录ARDS的个数
    cmp ebx, 0		      ;若ebx为0且cf不为1,这说明ards全部返回，当前已是最后一个
@@ -67,47 +67,47 @@
 .next_ards:
    loop .find_max_mem_area
    jmp .mem_get_ok
-;71～95行是利用子功能0xe801探测内存容量
-;------  int 15h ax = E801h 获取内存大小,最大支持4G  ------
-; 返回后, ax cx 值一样,以KB为单位,bx dx值一样,以64KB为单位
-; 在ax和cx寄存器中为低16M,在bx和dx寄存器中为16MB到4G。
-.e820_failed_so_try_e801:
-   mov ax,0xe801
-   int 0x15    ;cf为0代表成功，为1代表失败，ax和cx以1KB为单位，只显示低15MB内存，bx和dx以64KB为单位，显示16MB-4GB中连续的内存单位数量
-   jc .e801_failed_so_try88   ;若当前e801方法失败,就尝试0x88方法
+; ;71～95行是利用子功能0xe801探测内存容量
+; ;------  int 15h ax = E801h 获取内存大小,最大支持4G  ------
+; ; 返回后, ax cx 值一样,以KB为单位,bx dx值一样,以64KB为单位
+; ; 在ax和cx寄存器中为低16M,在bx和dx寄存器中为16MB到4G。
+; .e820_failed_so_try_e801:
+;    mov ax,0xe801
+;    int 0x15    ;cf为0代表成功，为1代表失败，ax和cx以1KB为单位，只显示低15MB内存，bx和dx以64KB为单位，显示16MB-4GB中连续的内存单位数量
+;    jc .e801_failed_so_try88   ;若当前e801方法失败,就尝试0x88方法
 
-;1 先算出低15M的内存,ax和cx中是以KB为单位的内存数量,将其转换为以byte为单位
-   mov cx,0x400	     ;cx和ax值一样,cx用做乘数  cx=1024
-   mul cx      ;积的高16位在DX寄存器，低16位在AX寄存器
-   shl edx,16  ;将EDX左移16位后再与AX做或运算便得到了完整32位的积。
-   and eax,0x0000FFFF
-   or edx,eax
-   add edx, 0x100000 ;ax只是15MB,故要加1MB 获取到的内存总比实际大小少1MB，故在此“补偿”。
-   mov esi,edx	     ;先把低15MB的内存容量存入esi寄存器备份
-;88～95行是计算16MB之上的内存容量，结果存放在寄存器BX和DX，单位是64KB，所以也要将其转换为字节。
-;2 再将16MB以上的内存转换为byte为单位,寄存器bx和dx中是以64KB为单位的内存数量
-   xor eax,eax
-   mov ax,bx		
-   mov ecx, 0x10000	;0x10000十进制为64KB
-   mul ecx		;32位乘法,默认的被乘数是eax,积为64位,高32位存入edx,低32位存入eax.
-   add esi,eax		;由于此方法只能测出4G以内的内存,故32位eax足够了,edx肯定为0,只加eax便可
-   mov edx,esi		;edx为总内存大小
-   jmp .mem_get_ok
-;98～110行是用子功能0x88方法探测内存容量
-;-----------------  int 15h ah = 0x88 获取内存大小,只能获取64M之内  ----------
-.e801_failed_so_try88: 
-   ;int 15后，ax存入的是以kb为单位的内存容量
-   mov  ah, 0x88
-   int  0x15   ;cf为0表示成功，cf为1表示出错。ax以1KB为单位大小，内存空间1MB只上的连续单位数量，不包括低端1MB内存。
-   jc .error_hlt
-   and eax,0x0000FFFF
+; ;1 先算出低15M的内存,ax和cx中是以KB为单位的内存数量,将其转换为以byte为单位
+;    mov cx,0x400	     ;cx和ax值一样,cx用做乘数  cx=1024
+;    mul cx      ;积的高16位在DX寄存器，低16位在AX寄存器
+;    shl edx,16  ;将EDX左移16位后再与AX做或运算便得到了完整32位的积。
+;    and eax,0x0000FFFF
+;    or edx,eax
+;    add edx, 0x100000 ;ax只是15MB,故要加1MB 获取到的内存总比实际大小少1MB，故在此“补偿”。
+;    mov esi,edx	     ;先把低15MB的内存容量存入esi寄存器备份
+; ;88～95行是计算16MB之上的内存容量，结果存放在寄存器BX和DX，单位是64KB，所以也要将其转换为字节。
+; ;2 再将16MB以上的内存转换为byte为单位,寄存器bx和dx中是以64KB为单位的内存数量
+;    xor eax,eax
+;    mov ax,bx		
+;    mov ecx, 0x10000	;0x10000十进制为64KB
+;    mul ecx		;32位乘法,默认的被乘数是eax,积为64位,高32位存入edx,低32位存入eax.
+;    add esi,eax		;由于此方法只能测出4G以内的内存,故32位eax足够了,edx肯定为0,只加eax便可
+;    mov edx,esi		;edx为总内存大小
+;    jmp .mem_get_ok
+; ;98～110行是用子功能0x88方法探测内存容量
+; ;-----------------  int 15h ah = 0x88 获取内存大小,只能获取64M之内  ----------
+; .e801_failed_so_try88: 
+;    ;int 15后，ax存入的是以kb为单位的内存容量
+;    mov  ah, 0x88
+;    int  0x15   ;cf为0表示成功，cf为1表示出错。ax以1KB为单位大小，内存空间1MB只上的连续单位数量，不包括低端1MB内存。
+;    jc .error_hlt
+;    and eax,0x0000FFFF
       
-   ;16位乘法，被乘数是ax,积为32位.积的高16位在dx中，积的低16位在ax中
-   mov cx, 0x400     ;0x400等于1024,将ax中的内存容量换为以byte为单位
-   mul cx   ;积的高16位在DX寄存器，低16位在AX寄存器
-   shl edx, 16	     ;把dx移到高16位
-   or edx, eax	     ;把积的低16位组合到edx,为32位的积
-   add edx,0x100000  ;0x88子功能只会返回1MB以上的内存,故实际内存大小要加上1MB
+;    ;16位乘法，被乘数是ax,积为32位.积的高16位在dx中，积的低16位在ax中
+;    mov cx, 0x400     ;0x400等于1024,将ax中的内存容量换为以byte为单位
+;    mul cx   ;积的高16位在DX寄存器，低16位在AX寄存器
+;    shl edx, 16	     ;把dx移到高16位
+;    or edx, eax	     ;把积的低16位组合到edx,为32位的积
+;    add edx,0x100000  ;0x88子功能只会返回1MB以上的内存,故实际内存大小要加上1MB
 
 .mem_get_ok:
    mov [total_mem_bytes], edx	 ;将内存换为byte单位后存入total_mem_bytes处。
