@@ -174,13 +174,13 @@ p_mode_start:
    ;在开启分页后,用gdt新的地址重新加载
    lgdt [gdt_ptr]             ; 重新加载
 
-   mov byte [gs:160], 'V'     ;视频段段基址已经被更新,用字符v表示virtual addr
-   mov byte [gs:162], 'i'     ;视频段段基址已经被更新,用字符v表示virtual addr
-   mov byte [gs:164], 'r'     ;视频段段基址已经被更新,用字符v表示virtual addr
-   mov byte [gs:166], 't'     ;视频段段基址已经被更新,用字符v表示virtual addr
-   mov byte [gs:168], 'u'     ;视频段段基址已经被更新,用字符v表示virtual addr
-   mov byte [gs:170], 'a'     ;视频段段基址已经被更新,用字符v表示virtual addr
-   mov byte [gs:172], 'l'     ;视频段段基址已经被更新,用字符v表示virtual addr
+   mov byte [gs:160], 'V'
+   mov byte [gs:162], 'i'
+   mov byte [gs:164], 'r'
+   mov byte [gs:166], 't'
+   mov byte [gs:168], 'u'
+   mov byte [gs:170], 'a'
+   mov byte [gs:172], 'l'
 
    jmp $
 

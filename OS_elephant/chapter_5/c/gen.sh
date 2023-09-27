@@ -11,7 +11,7 @@ fi
 if [ ! -d "./build/kernel" ]; then
       mkdir build/kernel
 fi
-bximage -hd -mode="flat" -size=3 -q OS.img
+bximage -hd -mode="flat" -size=4 -q OS.img
 nasm -I ./boot/include/ -o ./build/boot/mbr.bin ./boot/mbr.S && dd if=./build/boot/mbr.bin of=./OS.img bs=512 count=1  conv=notrunc
 nasm -I ./boot/include/ -o ./build/boot/loader.bin ./boot/loader.S && dd if=./build/boot/loader.bin of=./OS.img bs=512 count=4 seek=2 conv=notrunc
 gcc -c -o build/kernel/main.o kernel/main.c -m32

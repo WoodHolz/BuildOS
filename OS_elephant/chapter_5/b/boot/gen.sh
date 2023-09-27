@@ -5,7 +5,7 @@ fi
 if [ -e "OS.img" ]; then
       rm -rf OS.img  
 fi
-bximage -hd -mode="flat" -size=3 -q OS.img
+bximage -hd -mode="flat" -size=32 -q OS.img
 nasm -I include/ -o ./build/mbr.bin mbr.S
 nasm -I include/ -o ./build/loader.bin loader.S
 dd if=./build/mbr.bin of=./OS.img bs=512 count=1  conv=notrunc
