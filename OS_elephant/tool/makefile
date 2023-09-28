@@ -4,7 +4,7 @@ img:
 	sh ./gen.sh
 
 run: img
-	bochs -f bochsrc.bochs
+	/usr/bin/bochs/bin/bochs -f bochsrc.bochs
 
 clean:  
 	rm -r ./build ./OS.img 
