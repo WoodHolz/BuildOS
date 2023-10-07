@@ -1,5 +1,7 @@
 qemu-system-i386 -display sdl -drive file=OS.img,index=0,media=disk,format=raw,if=ide,cache=none,id=drive0
 
+qemu-system-i386 -display sdl -drive file=OS.img,index=0,media=disk,format=raw,if=ide,cache=none,id=drive0 -S -s
+
 qemu-system-x86_64 -drive format=raw,file=OS.img,index=0,if=ide,cache=none
 
 qemu-system-x86_64 -drive format=raw,file=OS.img,\
