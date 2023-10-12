@@ -22,9 +22,8 @@ void main(void) {
     put_char('\b');
     put_char('3');
     int i=100;
-    while(i--)
-    {
+    while(i--){
         put_char('y');
     };
-    while(1);
+    while(1); // 就是 jmp $
 }

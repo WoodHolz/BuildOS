@@ -15,3 +15,4 @@ run_gdb: img
 clean:  
 	rm -r ./build ./OS.img 
 	clear
+	@echo "Done! Hope to see u again!"

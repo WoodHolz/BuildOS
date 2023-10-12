@@ -73,6 +73,7 @@ put_char:
    cmp bx, 2000		   
    jl .set_cursor	; 若光标值小于2000,表示未写到显存的最后,则去设置新的光标值
 					   ; 若超出屏幕字符数大小(2000)则换行处理
+; 这里参考 Linux 的换行操作，即 LF 实际上进行了 LF 和 CR 两个操作
  .is_line_feed:  ; 是换行符LF(\n)
  .is_carriage_return: ; 是回车符CR(\r)
 					  ; 如果是CR(\r),只要把光标移到行首就行了。
