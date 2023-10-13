@@ -4,7 +4,12 @@ img:
 	sh ./gen.sh
 
 run: img
-	/usr/bin/bochs/bin/bochs -f bochsrc.bochs
+	/usr/bin/bochs/bin/bochs -f bochsrc.bochs 
+
+run_gdb: img
+	echo '' | /usr/bin/bochs_gdb/bin/bochs_gdb \
+		-f bochsrc_gdb.bochs & \
+		gdb -ex "target remote:1234"
 
 clean:  
 	rm -r ./build ./OS.img 
