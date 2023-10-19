@@ -1,0 +1,143 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CODE_DESC	boot/loader.S	/^   CODE_DESC:  dd    0x0000FFFF $/;"	d
+DATA_STACK_DESC	boot/loader.S	/^   DATA_STACK_DESC:  dd    0x0000FFFF$/;"	d
+GDT_BASE	boot/loader.S	/^   GDT_BASE:   dd    0x00000000 $/;"	d
+GDT_LIMIT	boot/loader.S	/^   GDT_LIMIT   equ   GDT_SIZE -	1 $/;"	d
+GDT_SIZE	boot/loader.S	/^   GDT_SIZE   equ   $ - GDT_BASE$/;"	d
+IDT_DESC_16_TYPE	kernel/global.h	23;"	d
+IDT_DESC_32_TYPE	kernel/global.h	22;"	d
+IDT_DESC_ATTR_DPL0	kernel/global.h	24;"	d
+IDT_DESC_ATTR_DPL3	kernel/global.h	25;"	d
+IDT_DESC_CNT	kernel/interrupt.c	12;"	d	file:
+IDT_DESC_DPL0	kernel/global.h	20;"	d
+IDT_DESC_DPL3	kernel/global.h	21;"	d
+IDT_DESC_P	kernel/global.h	19;"	d
+OJBIN	makefile	/^OJBIN=$(wildcard *.bin)$/;"	m
+PIC_M_CTRL	kernel/interrupt.c	7;"	d	file:
+PIC_M_DATA	kernel/interrupt.c	8;"	d	file:
+PIC_S_CTRL	kernel/interrupt.c	9;"	d	file:
+PIC_S_DATA	kernel/interrupt.c	10;"	d	file:
+RPL0	kernel/global.h	5;"	d
+RPL0	lib/kernel/print.S	/^RPL0  equ   0$/;"	d
+RPL1	kernel/global.h	6;"	d
+RPL2	kernel/global.h	7;"	d
+RPL3	kernel/global.h	8;"	d
+SECTION	boot/mbr.S	/^SECTION MBR vstart=0x7c00         $/;"	l
+SELECTOR_CODE	boot/loader.S	/^   SELECTOR_CODE equ (0x0001<<3) + TI_GDT + RPL0         ; 相当于(CODE_DESC - GDT_BASE)\/8 + TI_GDT + RPL0$/;"	d
+SELECTOR_DATA	boot/loader.S	/^   SELECTOR_DATA equ (0x0002<<3) + TI_GDT + RPL0	 ; 同上$/;"	d
+SELECTOR_K_CODE	kernel/global.h	13;"	d
+SELECTOR_K_DATA	kernel/global.h	14;"	d
+SELECTOR_K_GS	kernel/global.h	16;"	d
+SELECTOR_K_STACK	kernel/global.h	15;"	d
+SELECTOR_VIDEO	boot/loader.S	/^   SELECTOR_VIDEO equ (0x0003<<3) + TI_GDT + RPL0	 ; 同上 $/;"	d
+SELECTOR_VIDEO	lib/kernel/print.S	/^SELECTOR_VIDEO equ (0x0003<<3) + TI_GDT + RPL0$/;"	d
+TI_GDT	kernel/global.h	10;"	d
+TI_GDT	lib/kernel/print.S	/^TI_GDT equ  0$/;"	d
+TI_LDT	kernel/global.h	11;"	d
+VECTOR	kernel/kernel.S	/^VECTOR 0x00,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x01,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x02,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x03,ZERO $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x04,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x05,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x06,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x07,ZERO $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x08,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x09,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x0a,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x0b,ERROR_CODE $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x0c,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x0d,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x0e,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x0f,ZERO $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x10,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x11,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x12,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x13,ZERO $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x14,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x15,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x16,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x17,ZERO $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x18,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x19,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x1a,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x1b,ERROR_CODE $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x1c,ZERO$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x1d,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x1e,ERROR_CODE$/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x1f,ZERO $/;"	l
+VECTOR	kernel/kernel.S	/^VECTOR 0x20,ZERO$/;"	l
+VIDEO_DESC	boot/loader.S	/^   VIDEO_DESC: dd    0x80000007	       ; limit=(0xbffff-0xb8000)\/4k=0x7$/;"	d
+__KERNEL_GLOBAL_H	kernel/global.h	2;"	d
+__KERNEL_INIT_H	kernel/init.h	2;"	d
+__KERNEL_INTERRUPT_H	kernel/interrupt.h	2;"	d
+__LIB_IO_H	lib/kernel/io.h	12;"	d
+__LIB_KERNEL_PRINT_H	lib/kernel/print.h	2;"	d
+__LIB_STDINT_H	lib/stdint.h	2;"	d
+ards_nr	boot/loader.S	/^   ards_nr dw 0		      ;用于记录ards结构体数量$/;"	d
+attribute	kernel/interrupt.c	/^   uint8_t     attribute;$/;"	m	struct:gate_desc	file:
+dcount	kernel/interrupt.c	/^   uint8_t     dcount;   \/\/此项为双字计数字段，是门描述符中的第4字节。此项固定值，不用考虑$/;"	m	struct:gate_desc	file:
+enter_kernel	boot/loader.S	/^enter_kernel:    $/;"	l
+exception_init	kernel/interrupt.c	/^static void exception_init(void) {			    \/\/ 完成一般中断处理函数注册及异常名称注册$/;"	f	file:
+extern	kernel/kernel.S	/^extern idt_table		 ;idt_table是C中注册的中断处理程序数组$/;"	l
+func_offset_high_word	kernel/interrupt.c	/^   uint16_t    func_offset_high_word;$/;"	m	struct:gate_desc	file:
+func_offset_low_word	kernel/interrupt.c	/^   uint16_t    func_offset_low_word;$/;"	m	struct:gate_desc	file:
+gate_desc	kernel/interrupt.c	/^struct gate_desc {$/;"	s	file:
+gdt_ptr	boot/loader.S	/^   gdt_ptr  dw  GDT_LIMIT $/;"	d
+general_intr_handler	kernel/interrupt.c	/^static void general_intr_handler(uint8_t vec_nr) {$/;"	f	file:
+global	kernel/kernel.S	/^global intr_entry_table$/;"	l
+global	kernel/kernel.S	/^global intr_exit$/;"	l
+global	lib/kernel/print.S	/^global put_char$/;"	l
+global	lib/kernel/print.S	/^global put_int$/;"	l
+global	lib/kernel/print.S	/^global put_str$/;"	l
+idt	kernel/interrupt.c	/^static struct gate_desc idt[IDT_DESC_CNT];   \/\/ idt是中断描述符表,本质上就是个中断门描述符数组$/;"	v	typeref:struct:gate_desc	file:
+idt_desc_init	kernel/interrupt.c	/^static void idt_desc_init(void) {$/;"	f	file:
+idt_init	kernel/interrupt.c	/^void idt_init() {$/;"	f
+idt_table	kernel/interrupt.c	/^intr_handler idt_table[IDT_DESC_CNT];	     \/\/ 定义中断处理程序数组.在kernel.S中定义的intrXXentry只是中断处理程序的入口,最终调用的是ide_table中的处理程序$/;"	v
+ile	makefile	/^	qemu-system-i386 -display sdl -drive file=OS.img,index=0,media=disk,format=raw,if=ide,cache=none,id=drive0 -S -s & \\$/;"	m
+inb	lib/kernel/io.h	/^static inline uint8_t inb(uint16_t port) {$/;"	f
+init_all	kernel/init.c	/^void init_all() {$/;"	f
+insw	lib/kernel/io.h	/^static inline void insw(uint16_t port, void* addr, uint32_t word_cnt) {$/;"	f
+int16_t	lib/stdint.h	/^typedef signed short int int16_t;$/;"	t
+int32_t	lib/stdint.h	/^typedef signed int int32_t;$/;"	t
+int64_t	lib/stdint.h	/^typedef signed long long int int64_t;$/;"	t
+int8_t	lib/stdint.h	/^typedef signed char int8_t;$/;"	t
+intr_entry_table	kernel/kernel.S	/^intr_entry_table:$/;"	l
+intr_exit	kernel/kernel.S	/^intr_exit:	     $/;"	l
+intr_handler	kernel/interrupt.h	/^typedef void* intr_handler;$/;"	t
+intr_name	kernel/interrupt.c	/^char* intr_name[IDT_DESC_CNT];		     \/\/ 用于保存异常的名字$/;"	v
+kernel_init	boot/loader.S	/^kernel_init:$/;"	l
+loader_start	boot/loader.S	/^   loader_start:$/;"	l
+main	kernel/main.c	/^void main(void) {$/;"	f
+make_idt_desc	kernel/interrupt.c	/^static void make_idt_desc(struct gate_desc* p_gdesc, uint8_t attr, intr_handler function) { $/;"	f	file:
+mem_cpy	boot/loader.S	/^mem_cpy:		      $/;"	l
+mul	boot/loader.S	/^      mul dx$/;"	d
+mul	boot/mbr.S	/^      mul dx$/;"	d
+outb	lib/kernel/io.h	/^static inline void outb(uint16_t port, uint8_t data) {$/;"	f
+outsw	lib/kernel/io.h	/^static inline void outsw(uint16_t port, const void* addr, uint32_t word_cnt) {$/;"	f
+p_mode_start	boot/loader.S	/^p_mode_start:$/;"	l
+pic_init	kernel/interrupt.c	/^static void pic_init(void) {$/;"	f	file:
+pop	kernel/kernel.S	/^   pop ds$/;"	d
+push	kernel/kernel.S	/^   push ds$/;"	d
+put_char	lib/kernel/print.S	/^put_char:$/;"	l
+put_int	lib/kernel/print.S	/^put_int:$/;"	l
+put_int_buffer	lib/kernel/print.S	/^put_int_buffer    dq    0     ; 定义8字节缓冲区用于数字到字符的转换$/;"	d
+put_str	lib/kernel/print.S	/^put_str:$/;"	l
+rd_disk_m_16	boot/mbr.S	/^rd_disk_m_16:	   $/;"	l
+rd_disk_m_32	boot/loader.S	/^rd_disk_m_32:	   $/;"	l
+section	kernel/kernel.S	/^section .data$/;"	l
+section	kernel/kernel.S	/^section .text$/;"	l
+section	lib/kernel/print.S	/^section .data$/;"	l
+section	lib/kernel/print.S	/^section .text$/;"	l
+selector	kernel/interrupt.c	/^   uint16_t    selector;$/;"	m	struct:gate_desc	file:
+setup_page	boot/loader.S	/^setup_page:$/;"	l
+total_mem_bytes	boot/loader.S	/^   total_mem_bytes dd 0					 $/;"	d
+uint16_t	lib/stdint.h	/^typedef unsigned short int uint16_t;$/;"	t
+uint32_t	lib/stdint.h	/^typedef unsigned int uint32_t;$/;"	t
+uint64_t	lib/stdint.h	/^typedef unsigned long long int uint64_t;$/;"	t
+uint8_t	lib/stdint.h	/^typedef unsigned char uint8_t;$/;"	t
