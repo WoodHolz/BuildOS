@@ -16,6 +16,6 @@ fi
 dd if=/dev/zero of=OS.img bs=512 count=117187
 nasm -I ./boot/include/ -o ./build/boot/mbr.bin ./boot/mbr.S && dd if=./build/boot/mbr.bin of=./OS.img bs=512 count=1  conv=notrunc
 nasm -I ./boot/include/ -o ./build/boot/loader.bin ./boot/loader.S && dd if=./build/boot/loader.bin of=./OS.img bs=512 count=4 seek=2 conv=notrunc
-gcc-4.4 -c -o build/kernel/main.o kernel/main.c -m32
+gcc -c -o build/kernel/main.o kernel/main.c -m32
 ld build/kernel/main.o -Ttext 0xc0001500 -e main -o build/kernel/kernel.bin -m elf_i386 && \
     dd if=./build/kernel/kernel.bin of=./OS.img bs=512 count=200 seek=9 conv=notrunc
