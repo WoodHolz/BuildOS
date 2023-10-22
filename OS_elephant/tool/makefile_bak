@@ -1,0 +1,43 @@
+OJBIN = $(wildcard *.bin)
+BUILD_DIR = ./build
+DISK_IMG = OS.img
+ENTRY_TEXT = ./kernel.ld
+AS = nasm
+CC = gcc
+LD = ld
+LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/
+ASFLAGS = -f elf 
+ASBINLIB = -I boot/include/
+CFLAGS = -m32 -Wall $(LIB) -c -fno-builtin -W -Wstrict-prototypes \
+         -Wmissing-prototypes -fno-stack-protector
+LDFLAGS = -melf_i386 -T $(ENTRY_TEXT) -e main
+
+# the path of bochs
+BOCHS = /usr/bin/bochs/bin/bochs
+BOCHS_GDB = /usr/bin/bochs_gdb/bin/bochs_gdb
+BXIMAGE = /usr/bin/bochs/bin/bximage
+
+# 表示下面的`img` `run` `clean`并不存在
+.PHONY: dir img run clean 
+
+dir:
+	if [ ! -d "$(BUILD_DIR)"]; then mkdir $(BUILD_DIR) fi
+
+img:
+	dd if=/dev/zero of=$(DISK_IMG) bs=512 count=117187
+#	$(BXIMAGE) -hd -mode="flat" -size=32 -q $(DISK_IMG)
+
+
+
+run: img
+	$(BOCHS) -f bochsrc.bochs
+
+gdb_run: img
+	echo '' | $(BOCHS_GDB) \
+		-f bochsrc_gdb.bochs & \
+		gdb -ex "target remote:1234"
+
+clean:  
+	rm -r ./build ./OS.img 
+	clear
+	@echo "Done! Hope to see u again!"

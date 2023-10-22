@@ -1,0 +1,32 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CODE_DESC	boot/loader.S	/^   CODE_DESC:  dd    0x0000FFFF $/;"	d
+DATA_STACK_DESC	boot/loader.S	/^   DATA_STACK_DESC:  dd    0x0000FFFF$/;"	d
+GDT_BASE	boot/loader.S	/^   GDT_BASE:   dd    0x00000000 $/;"	d
+GDT_LIMIT	boot/loader.S	/^   GDT_LIMIT   equ   GDT_SIZE -	1 $/;"	d
+GDT_SIZE	boot/loader.S	/^   GDT_SIZE   equ   $ - GDT_BASE$/;"	d
+OJBIN	makefile	/^OJBIN=$(wildcard *.bin)$/;"	m
+SECTION	boot/mbr.S	/^SECTION MBR vstart=0x7c00         $/;"	l
+SELECTOR_CODE	boot/loader.S	/^   SELECTOR_CODE equ (0x0001<<3) + TI_GDT + RPL0         ; 相当于(CODE_DESC - GDT_BASE)\/8 + TI_GDT + RPL0$/;"	d
+SELECTOR_DATA	boot/loader.S	/^   SELECTOR_DATA equ (0x0002<<3) + TI_GDT + RPL0	 ; 同上$/;"	d
+SELECTOR_VIDEO	boot/loader.S	/^   SELECTOR_VIDEO equ (0x0003<<3) + TI_GDT + RPL0	 ; 同上 $/;"	d
+VIDEO_DESC	boot/loader.S	/^   VIDEO_DESC: dd    0x80000007	       ; limit=(0xbffff-0xb8000)\/4k=0x7$/;"	d
+ards_nr	boot/loader.S	/^   ards_nr dw 0		      ;用于记录ards结构体数量$/;"	d
+enter_kernel	boot/loader.S	/^enter_kernel:    $/;"	l
+gdt_ptr	boot/loader.S	/^   gdt_ptr  dw  GDT_LIMIT $/;"	d
+kernel_init	boot/loader.S	/^kernel_init:$/;"	l
+loader_start	boot/loader.S	/^   loader_start:$/;"	l
+main	kernel/main.c	/^int main(void) {$/;"	f
+mem_cpy	boot/loader.S	/^mem_cpy:		      $/;"	l
+mul	boot/loader.S	/^      mul dx$/;"	d
+mul	boot/mbr.S	/^      mul dx$/;"	d
+p_mode_start	boot/loader.S	/^p_mode_start:$/;"	l
+rd_disk_m_16	boot/mbr.S	/^rd_disk_m_16:	   $/;"	l
+rd_disk_m_32	boot/loader.S	/^rd_disk_m_32:	   $/;"	l
+setup_page	boot/loader.S	/^setup_page:$/;"	l
+temp	boot/mbr.S	/^   temp:$/;"	l
+total_mem_bytes	boot/loader.S	/^   total_mem_bytes dd 0					 $/;"	d
