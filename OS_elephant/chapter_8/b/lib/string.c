@@ -50,7 +50,10 @@ uint32_t strlen(const char* str) {
    return (p - str - 1);
 }
 
-/* 比较两个字符串,若a_中的字符大于b_中的字符返回1,相等时返回0,否则返回-1. */
+/*
+ * 比较两个字符串,若a_中的字符大于b_中的字符返回1,相等时返回0,否则返回-1. 
+ * 先遍历判断是否相等, 不相等时跳出
+*/
 int8_t strcmp (const char* a, const char* b) {
    ASSERT(a != NULL && b != NULL);
    while (*a != 0 && *a == *b) {
@@ -92,7 +95,7 @@ char* strrchr(const char* str, const uint8_t ch) {
 char* strcat(char* dst_, const char* src_) {
    ASSERT(dst_ != NULL && src_ != NULL);
    char* str = dst_;
-   while (*str++);
+   while (*str++); // 空循环到最后跳出
    --str;      // 别看错了，--str是独立的一句，并不是while的循环体
    while((*str++ = *src_++));	 // 当*str被赋值为0时,此时表达式不成立,正好添加了字符串结尾的0.
    return dst_;
