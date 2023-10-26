@@ -23,10 +23,8 @@ loader_start	boot/loader.S	/^   loader_start:$/;"	l
 main	kernel/main.c	/^int main(void) {$/;"	f
 mem_cpy	boot/loader.S	/^mem_cpy:		      $/;"	l
 mul	boot/loader.S	/^      mul dx$/;"	d
-mul	boot/mbr.S	/^      mul dx$/;"	d
 p_mode_start	boot/loader.S	/^p_mode_start:$/;"	l
-rd_disk_m_16	boot/mbr.S	/^rd_disk_m_16:	   $/;"	l
+rd_disk_BIOS	boot/mbr.S	/^rd_disk_BIOS:	   $/;"	l
 rd_disk_m_32	boot/loader.S	/^rd_disk_m_32:	   $/;"	l
 setup_page	boot/loader.S	/^setup_page:$/;"	l
-temp	boot/mbr.S	/^   temp:$/;"	l
 total_mem_bytes	boot/loader.S	/^   total_mem_bytes dd 0					 $/;"	d
