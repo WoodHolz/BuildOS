@@ -4,7 +4,7 @@ ENTRY_TEXT = ./kernel.ld
 AS = nasm
 CC = gcc
 LD = ld
-LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/ 
+LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/ -I userprog/
 ASFLAGS = -f elf 
 ASBINLIB = -I boot/include/
 CFLAGS = -m32 -Wall $(LIB) -c -fno-builtin -W -Wstrict-prototypes \
@@ -15,7 +15,8 @@ OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/init.o $(BUILD_DIR)/interrupt.o \
       $(BUILD_DIR)/debug.o $(BUILD_DIR)/memory.o $(BUILD_DIR)/bitmap.o \
 	$(BUILD_DIR)/string.o $(BUILD_DIR)/thread.o $(BUILD_DIR)/list.o \
     $(BUILD_DIR)/switch.o $(BUILD_DIR)/console.o $(BUILD_DIR)/sync.o \
-	   $(BUILD_DIR)/keyboard.o  $(BUILD_DIR)/ioqueue.o
+	   $(BUILD_DIR)/keyboard.o  $(BUILD_DIR)/ioqueue.o $(BUILD_DIR)/tss.o \
+	   $(BUILD_DIR)/process.o
 
 
 # the path of bochs
@@ -99,6 +100,17 @@ $(BUILD_DIR)/ioqueue.o: device/ioqueue.c device/ioqueue.h lib/stdint.h thread/th
 	kernel/debug.h
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD_DIR)/tss.o: userprog/tss.c userprog/tss.h thread/thread.h lib/stdint.h \
+	lib/kernel/list.h kernel/global.h lib/string.h lib/stdint.h \
+	lib/kernel/print.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/process.o: userprog/process.c userprog/process.h thread/thread.h \
+	lib/stdint.h lib/kernel/list.h kernel/global.h kernel/debug.h \
+	kernel/memory.h lib/kernel/bitmap.h userprog/tss.h kernel/interrupt.h \
+	lib/string.h lib/stdint.h
+	$(CC) $(CFLAGS) $< -o $@
+
 ##############    汇编代码编译    ###############
 $(BUILD_DIR)/kernel.o: kernel/kernel.S
 	$(AS) $(ASFLAGS) $< -o $@
@@ -146,3 +158,4 @@ gdb_run: all
 	echo '' | $(BOCHS_GDB) \
 		-f bochsrc_gdb.bochs & \
 		gdb -ex "target remote:1234"
+
