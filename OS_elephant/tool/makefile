@@ -1,10 +1,11 @@
 BUILD_DIR = ./build
 DISK_IMG = OS.img
+DISK_IMG2 = FS.img
 ENTRY_TEXT = ./kernel.ld
 AS = nasm
 CC = gcc
 LD = ld
-LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/ -I userprog/
+LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/  -I userprog/  -I fs/
 ASFLAGS = -f elf 
 ASBINLIB = -I boot/include/
 CFLAGS = -m32 -Wall $(LIB) -c -fno-builtin -W -Wstrict-prototypes \
@@ -16,7 +17,8 @@ OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/init.o $(BUILD_DIR)/interrupt.o \
 	$(BUILD_DIR)/string.o $(BUILD_DIR)/thread.o $(BUILD_DIR)/list.o \
     $(BUILD_DIR)/switch.o $(BUILD_DIR)/console.o $(BUILD_DIR)/sync.o \
 	   $(BUILD_DIR)/keyboard.o  $(BUILD_DIR)/ioqueue.o $(BUILD_DIR)/tss.o \
-	   $(BUILD_DIR)/process.o
+	   $(BUILD_DIR)/process.o  $(BUILD_DIR)/syscall.o $(BUILD_DIR)/syscall-init.o \
+	  $(BUILD_DIR)/stdio.o $(BUILD_DIR)/ide.o $(BUILD_DIR)/stdio-kernel.o $(BUILD_DIR)/fs.o
 
 
 # the path of bochs
@@ -111,6 +113,35 @@ $(BUILD_DIR)/process.o: userprog/process.c userprog/process.h thread/thread.h \
 	lib/string.h lib/stdint.h
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD_DIR)/syscall.o: lib/user/syscall.c lib/user/syscall.h lib/stdint.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/syscall-init.o: userprog/syscall-init.c userprog/syscall-init.h \
+	lib/stdint.h lib/user/syscall.h lib/kernel/print.h thread/thread.h \
+	lib/kernel/list.h kernel/global.h lib/kernel/bitmap.h kernel/memory.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/stdio.o: lib/stdio.c lib/stdio.h lib/stdint.h kernel/interrupt.h \
+	lib/stdint.h kernel/global.h lib/string.h lib/user/syscall.h lib/kernel/print.h
+	$(CC) $(CFLAGS) $< -o $@
+
+
+$(BUILD_DIR)/ide.o: device/ide.c device/ide.h lib/stdint.h thread/sync.h \
+	lib/kernel/list.h kernel/global.h thread/thread.h lib/kernel/bitmap.h \
+	kernel/memory.h lib/kernel/io.h lib/stdio.h lib/stdint.h lib/kernel/stdio-kernel.h\
+	kernel/interrupt.h kernel/debug.h device/console.h device/timer.h lib/string.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/stdio-kernel.o: lib/kernel/stdio-kernel.c lib/kernel/stdio-kernel.h lib/stdint.h \
+	lib/kernel/print.h lib/stdio.h lib/stdint.h device/console.h kernel/global.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/fs.o: fs/fs.c fs/fs.h lib/stdint.h device/ide.h thread/sync.h lib/kernel/list.h \
+	kernel/global.h thread/thread.h lib/kernel/bitmap.h kernel/memory.h fs/super_block.h \
+	fs/inode.h fs/dir.h lib/kernel/stdio-kernel.h lib/string.h lib/stdint.h kernel/debug.h \
+	kernel/interrupt.h lib/kernel/print.h
+	$(CC) $(CFLAGS) $< -o $@
+
 ##############    汇编代码编译    ###############
 $(BUILD_DIR)/kernel.o: kernel/kernel.S
 	$(AS) $(ASFLAGS) $< -o $@
@@ -125,14 +156,19 @@ $(BUILD_DIR)/switch.o: thread/switch.S
 $(BUILD_DIR)/kernel.bin: $(OBJS)
 	$(LD) $(LDFLAGS) $^ -o $@
 
-.PHONY : mk_dir hd clean all run gdb_run
+.PHONY : mk_dir fs_img hd clean all run gdb_run
 
 mk_dir:
 	if [ ! -d $(BUILD_DIR) ];then mkdir $(BUILD_DIR);fi
 
 mk_img:
-	dd if=/dev/zero of=$(DISK_IMG) bs=512 count=117187
-#	if [ ! -e $(DISK_IMG) ];then $(BXIMAGE) -hd -mode="flat" -size=32 -q $(DISK_IMG);fi
+#	dd if=/dev/zero of=$(DISK_IMG) bs=512 count=117187
+	if [ ! -e $(DISK_IMG) ];then $(BXIMAGE) -hd -mode="flat" -size=32 -q $(DISK_IMG);fi
+
+fs_img:
+#	dd if=/dev/zero of=$(DISK_IMG2) bs=512 count=117187
+#if [ ! -e $(DISK_IMG2) ];then $(BXIMAGE) -hd -mode="flat" -size=80 -q $(DISK_IMG2);fi
+	cp ../../../FS.img ./
 
 hd:
 	dd if=$(BUILD_DIR)/mbr.bin of=$(DISK_IMG) bs=512 count=1  conv=notrunc
@@ -142,13 +178,13 @@ hd:
            bs=512 count=200 seek=9 conv=notrunc
 
 clean:
-	rm $(BUILD_DIR) -r && rm $(DISK_IMG)
+	rm $(BUILD_DIR) -r && rm $(DISK_IMG) $(DISK_IMG2)
 	clear
 	@echo "Done! Hope to see u again!"
 
 build: $(BUILD_DIR)/kernel.bin $(BUILD_DIR)/mbr.bin $(BUILD_DIR)/loader.bin
 
-all: mk_dir mk_img build hd
+all: mk_dir mk_img fs_img build hd 
 
 
 run: all
@@ -158,4 +194,6 @@ gdb_run: all
 	echo '' | $(BOCHS_GDB) \
 		-f bochsrc_gdb.bochs & \
 		gdb -ex "target remote:1234"
+
+
 
