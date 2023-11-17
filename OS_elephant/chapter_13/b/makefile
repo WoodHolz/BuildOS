@@ -158,7 +158,8 @@ mk_dir:
 mk_img:
 	dd if=/dev/zero of=$(DISK_IMG) bs=512 count=117187
 #	if [ ! -e $(DISK_IMG) ];then $(BXIMAGE) -hd -mode="flat" -size=32 -q $(DISK_IMG);fi
-	dd if=/dev/zero of=$(DISK_IMG2) bs=512 count=117187
+#	dd if=/dev/zero of=$(DISK_IMG2) bs=512 count=117187
+	cp ../../../FS.img ./
 hd:
 	dd if=$(BUILD_DIR)/mbr.bin of=$(DISK_IMG) bs=512 count=1  conv=notrunc
 	dd if=$(BUILD_DIR)/loader.bin of=$(DISK_IMG) bs=512 count=4 seek=2 conv=notrunc
