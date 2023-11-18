@@ -1,0 +1,1 @@
+The loader can run on qemu now, function rd_disk_m_16 work normally.

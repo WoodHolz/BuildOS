@@ -1,7 +1,7 @@
 %include "boot.inc"
 section loader vstart=LOADER_BASE_ADDR
 
-; 输出背景色绿色，前景色红色，并且跳动的字符串"1 MBR"
+; 输出背景色绿色，前景色红色，并且跳动的字符串
 mov byte [gs:0x20],'2'
 mov byte [gs:0x21],0xA4     ; A表示绿色背景闪烁，4表示前景色为红色
 
