@@ -1,3 +1,1 @@
-ide_init has bug
-
-ide_read 
+emmm 🤣, actually kernel.ld's problem

@@ -1,6 +1,7 @@
 BUILD_DIR = ./build
 DISK_IMG = OS.img
 DISK_IMG2 = FS.img
+ENTRY_POINT = 0xc0001500
 ENTRY_TEXT = ./kernel.ld
 AS = nasm
 CC = gcc
@@ -10,7 +11,8 @@ ASFLAGS = -f elf -g
 ASBINLIB = -I boot/include/
 CFLAGS = -m32 -Wall $(LIB) -c -fno-builtin -W -Wstrict-prototypes \
          -Wmissing-prototypes -fno-stack-protector -g
-LDFLAGS = -melf_i386 -T $(ENTRY_TEXT) -e main -Map $(BUILD_DIR)/kernel.map
+# LDFLAGS = -melf_i386 -T $(ENTRY_TEXT) -e main -Map $(BUILD_DIR)/kernel.map
+LDFLAGS = -melf_i386 -Ttext $(ENTRY_POINT) -e main -Map $(BUILD_DIR)/kernel.map
 OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/init.o $(BUILD_DIR)/interrupt.o \
 	$(BUILD_DIR)/timer.o $(BUILD_DIR)/kernel.o $(BUILD_DIR)/print.o \
 	$(BUILD_DIR)/debug.o $(BUILD_DIR)/memory.o $(BUILD_DIR)/bitmap.o \
