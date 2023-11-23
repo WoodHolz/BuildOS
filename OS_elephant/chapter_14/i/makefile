@@ -6,10 +6,10 @@ AS = nasm
 CC = gcc
 LD = ld
 LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/  -I userprog/  -I fs/
-ASFLAGS = -f elf 
+ASFLAGS = -f elf -g
 ASBINLIB = -I boot/include/
 CFLAGS = -m32 -Wall $(LIB) -c -fno-builtin -W -Wstrict-prototypes \
-         -Wmissing-prototypes -fno-stack-protector
+         -Wmissing-prototypes -fno-stack-protector -g
 LDFLAGS = -melf_i386 -T $(ENTRY_TEXT) -e main -Map $(BUILD_DIR)/kernel.map
 OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/init.o $(BUILD_DIR)/interrupt.o \
 	$(BUILD_DIR)/timer.o $(BUILD_DIR)/kernel.o $(BUILD_DIR)/print.o \
@@ -174,7 +174,7 @@ $(BUILD_DIR)/switch.o: thread/switch.S
 $(BUILD_DIR)/kernel.bin: $(OBJS)
 	$(LD) $(LDFLAGS) $^ -o $@
 
-.PHONY : mk_dir fs_img hd clean all run gdb_run
+.PHONY : mk_dir fs_img hd clean all run gdb_run gdb_symbol
 
 mk_dir:
 	if [ ! -d $(BUILD_DIR) ];then mkdir $(BUILD_DIR);fi
@@ -202,7 +202,12 @@ clean:
 
 build: $(BUILD_DIR)/kernel.bin $(BUILD_DIR)/mbr.bin $(BUILD_DIR)/loader.bin
 
-all: mk_dir mk_img fs_img build hd 
+# 生成可以被GDB理解的符号表，用于GDB调试
+gdb_symbol:
+	objcopy --only-keep-debug $(BUILD_DIR)/kernel.bin $(BUILD_DIR)/kernel.sym
+
+
+all: mk_dir mk_img fs_img build hd gdb_symbol
 
 run: all
 	$(BOCHS) -f bochsrc.bochs
@@ -210,6 +215,6 @@ run: all
 gdb_run: all
 	echo '' | $(BOCHS_GDB) \
 		-f bochsrc_gdb.bochs & \
-		gdb -ex "target remote:1234"
+		gdb -ex "target remote:1234" -ex "symbol-file $(shell pwd)/build/kernel.sym"
 
 

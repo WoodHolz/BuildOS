@@ -6,7 +6,7 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AS	makefile	/^AS = nasm$/;"	m
 ASBINLIB	makefile	/^ASBINLIB = -I boot\/include\/$/;"	m
-ASFLAGS	makefile	/^ASFLAGS = -f elf $/;"	m
+ASFLAGS	makefile	/^ASFLAGS = -f elf -g$/;"	m
 ASSERT	kernel/debug.h	13;"	d
 ASSERT	kernel/debug.h	15;"	d
 BITMAP_MASK	lib/kernel/bitmap.h	4;"	d
@@ -502,8 +502,6 @@ ioqueue_init	device/ioqueue.c	/^void ioqueue_init(struct ioqueue* ioq) {$/;"	f
 irq_no	device/ide.h	/^   uint8_t irq_no;		 \/\/ 本通道所用的中断号$/;"	m	struct:ide_channel
 itoa	lib/stdio.c	/^static void itoa(uint32_t value, char** buf_ptr_addr, uint8_t base) {$/;"	f	file:
 k_block_descs	kernel/memory.c	/^struct mem_block_desc k_block_descs[DESC_CNT];	\/\/ 内核内存块描述符数组$/;"	v	typeref:struct:mem_block_desc
-k_thread_a	kernel/main.c	/^void k_thread_a(void* arg) {     $/;"	f
-k_thread_b	kernel/main.c	/^void k_thread_b(void* arg) {     $/;"	f
 kbd_buf	device/keyboard.c	/^struct ioqueue kbd_buf;	   \/\/ 定义键盘缓冲区$/;"	v	typeref:struct:ioqueue
 kernel_init	boot/loader.S	/^kernel_init:$/;"	l
 kernel_pool	kernel/memory.c	/^struct pool kernel_pool, user_pool;      \/\/ 生成内核内存池和用户内存池$/;"	v	typeref:struct:pool
@@ -708,7 +706,7 @@ sys_free	kernel/memory.c	/^void sys_free(void* ptr) {$/;"	f
 sys_getpid	userprog/syscall-init.c	/^uint32_t sys_getpid(void) {$/;"	f
 sys_lseek	fs/fs.c	/^int32_t sys_lseek(int32_t fd, int32_t offset, uint8_t whence) {$/;"	f
 sys_malloc	kernel/memory.c	/^void* sys_malloc(uint32_t size) {$/;"	f
-sys_mkdir	fs/fs.c	/^int32_t sys_mkdir(const char *pathname)$/;"	f
+sys_mkdir	fs/fs.c	/^int32_t sys_mkdir(const char* pathname) {$/;"	f
 sys_open	fs/fs.c	/^int32_t sys_open(const char* pathname, uint8_t flags) {$/;"	f
 sys_read	fs/fs.c	/^int32_t sys_read(int32_t fd, void* buf, uint32_t count) {$/;"	f
 sys_unlink	fs/fs.c	/^int32_t sys_unlink(const char* pathname) {$/;"	f
@@ -746,8 +744,6 @@ tss	userprog/tss.c	/^struct tss {$/;"	s	file:
 tss_init	userprog/tss.c	/^void tss_init() {$/;"	f
 two_sec	fs/inode.c	/^   bool	 two_sec;	\/\/ inode是否跨扇区$/;"	m	struct:inode_position	file:
 u_block_desc	thread/thread.h	/^   struct mem_block_desc u_block_desc[DESC_CNT];   \/\/ 用户进程内存块描述符$/;"	m	struct:task_struct	typeref:struct:task_struct::mem_block_desc
-u_prog_a	kernel/main.c	/^void u_prog_a(void) {$/;"	f
-u_prog_b	kernel/main.c	/^void u_prog_b(void) {$/;"	f
 uint16_t	lib/stdint.h	/^typedef unsigned short int uint16_t;$/;"	t
 uint32_t	lib/stdint.h	/^typedef unsigned int uint32_t;$/;"	t
 uint64_t	lib/stdint.h	/^typedef unsigned long long int uint64_t;$/;"	t
