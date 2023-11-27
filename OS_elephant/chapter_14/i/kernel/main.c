@@ -25,12 +25,12 @@ int main(void) {
    thread_start("k_thread_a", 31, k_thread_a, "I am thread_a");
    thread_start("k_thread_b", 31, k_thread_b, "I am thread_b");
    // start();
-   // int status = sys_mkdir("/dir1/subdir1");
-   // if (!status){
-   //    put_str("create dir done!\n");
-   // } else {
-   //    put_str("create dir failed!\n");
-   // }
+   int status = sys_mkdir("/dir1/subdir1");
+   if (!status){
+      put_str("create dir done!\n");
+   } else {
+      put_str("create dir failed!\n");
+   }
    printf("/dir1/subdir1 create %s!\n", sys_mkdir("/dir1/subdir1") == 0 ? "done" : "fail");
    
    printf("/dir1 create %s!\n", sys_mkdir("/dir1") == 0 ? "done" : "fail");
