@@ -169,6 +169,13 @@ $(BUILD_DIR)/fork.o: userprog/fork.c userprog/fork.h thread/thread.h lib/stdint.
 	lib/kernel/stdio-kernel.h
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD_DIR)/shell.o: shell/shell.c shell/shell.h lib/stdint.h fs/fs.h \
+	lib/user/syscall.h lib/stdio.h lib/stdint.h kernel/global.h lib/user/assert.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/assert.o: lib/user/assert.c lib/user/assert.h lib/stdio.h lib/stdint.h
+	$(CC) $(CFLAGS) $< -o $@
+
 ##############    汇编代码编译    ###############
 $(BUILD_DIR)/kernel.o: kernel/kernel.S
 	$(AS) $(ASFLAGS) $< -o $@
