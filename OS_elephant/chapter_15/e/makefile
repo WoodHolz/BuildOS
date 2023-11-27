@@ -199,6 +199,10 @@ $(BUILD_DIR)/shell.o: shell/shell.c shell/shell.h lib/stdint.h fs/fs.h \
 $(BUILD_DIR)/assert.o: lib/user/assert.c lib/user/assert.h lib/stdio.h lib/stdint.h
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD_DIR)/buildin_cmd.o: shell/buildin_cmd.c shell/buildin_cmd.h lib/stdint.h \
+	lib/user/syscall.h lib/stdio.h lib/stdint.h lib/string.h fs/fs.h
+	$(CC) $(CFLAGS) $< -o $@
+
 ##############    链接所有目标文件    #############
 $(BUILD_DIR)/kernel.bin: $(OBJS)
 	$(LD) $(LDFLAGS) $^ -o $@
