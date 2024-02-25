@@ -14,7 +14,7 @@ SECTIONS
     {
         *(.data)
         *(.rodata)
-        . = ALIGN(4096);
+        . = ALIGN(8192);
     }
 
     .bss :
@@ -26,7 +26,7 @@ SECTIONS
     .stab :
     {
         *(.stab)
-        . = ALIGN(4096);
+        . = ALIGN(8192);
     }
     
     .stabstr :

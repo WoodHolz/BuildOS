@@ -6,13 +6,13 @@ ENTRY_TEXT = ./kernel.ld
 AS = nasm
 CC = gcc
 LD = ld
-LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/  -I userprog/  -I fs/
+LIB = -I lib/ -I lib/kernel/ -I lib/user/ -I kernel/ -I device/ -I thread/  -I userprog/  -I fs/ -I shell/
 ASFLAGS = -f elf -g
 ASBINLIB = -I boot/include/
 CFLAGS = -m32 -Wall $(LIB) -c -fno-builtin -W -Wstrict-prototypes \
          -Wmissing-prototypes -fno-stack-protector -g
-# LDFLAGS = -melf_i386 -T $(ENTRY_TEXT) -e main -Map $(BUILD_DIR)/kernel.map
-LDFLAGS = -melf_i386 -Ttext $(ENTRY_POINT) -e main -Map $(BUILD_DIR)/kernel.map
+LDFLAGS = -melf_i386 -T $(ENTRY_TEXT) -e main -Map $(BUILD_DIR)/kernel.map
+# LDFLAGS = -melf_i386 -Ttext $(ENTRY_POINT) -e main -Map $(BUILD_DIR)/kernel.map
 OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/init.o $(BUILD_DIR)/interrupt.o \
 	$(BUILD_DIR)/timer.o $(BUILD_DIR)/kernel.o $(BUILD_DIR)/print.o \
 	$(BUILD_DIR)/debug.o $(BUILD_DIR)/memory.o $(BUILD_DIR)/bitmap.o \
@@ -21,7 +21,9 @@ OBJS = $(BUILD_DIR)/main.o $(BUILD_DIR)/init.o $(BUILD_DIR)/interrupt.o \
 	$(BUILD_DIR)/keyboard.o  $(BUILD_DIR)/ioqueue.o $(BUILD_DIR)/tss.o \
 	$(BUILD_DIR)/process.o  $(BUILD_DIR)/syscall.o $(BUILD_DIR)/syscall-init.o \
 	$(BUILD_DIR)/stdio.o $(BUILD_DIR)/ide.o $(BUILD_DIR)/stdio-kernel.o $(BUILD_DIR)/fs.o \
-	$(BUILD_DIR)/inode.o $(BUILD_DIR)/file.o $(BUILD_DIR)/dir.o
+	$(BUILD_DIR)/inode.o $(BUILD_DIR)/file.o $(BUILD_DIR)/dir.o $(BUILD_DIR)/fork.o \
+	$(BUILD_DIR)/shell.o $(BUILD_DIR)/assert.o \ 
+	$(BUILD_DIR)/buildin_cmd.o
 
 
 # the path of bochs
@@ -162,6 +164,23 @@ $(BUILD_DIR)/dir.o: fs/dir.c fs/dir.h lib/stdint.h fs/inode.h lib/kernel/list.h 
 	lib/kernel/stdio-kernel.h kernel/debug.h kernel/interrupt.h
 	$(CC) $(CFLAGS) $< -o $@
 
+$(BUILD_DIR)/fork.o: userprog/fork.c userprog/fork.h thread/thread.h lib/stdint.h \
+	lib/kernel/list.h kernel/global.h lib/kernel/bitmap.h kernel/memory.h \
+	userprog/process.h kernel/interrupt.h kernel/debug.h \
+	lib/kernel/stdio-kernel.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/shell.o: shell/shell.c shell/shell.h lib/stdint.h fs/fs.h \
+	lib/user/syscall.h lib/stdio.h lib/stdint.h kernel/global.h lib/user/assert.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/assert.o: lib/user/assert.c lib/user/assert.h lib/stdio.h lib/stdint.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/buildin_cmd.o: shell/buildin_cmd.c shell/buildin_cmd.h lib/stdint.h \
+	lib/user/syscall.h lib/stdio.h lib/stdint.h lib/string.h fs/fs.h
+	$(CC) $(CFLAGS) $< -o $@
+
 ##############    汇编代码编译    ###############
 $(BUILD_DIR)/kernel.o: kernel/kernel.S
 	$(AS) $(ASFLAGS) $< -o $@
@@ -171,6 +190,13 @@ $(BUILD_DIR)/print.o: lib/kernel/print.S
 
 $(BUILD_DIR)/switch.o: thread/switch.S
 		$(AS) $(ASFLAGS) $< -o $@
+
+$(BUILD_DIR)/shell.o: shell/shell.c shell/shell.h lib/stdint.h fs/fs.h \
+	lib/user/syscall.h lib/stdio.h lib/stdint.h kernel/global.h lib/user/assert.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(BUILD_DIR)/assert.o: lib/user/assert.c lib/user/assert.h lib/stdio.h lib/stdint.h
+	$(CC) $(CFLAGS) $< -o $@
 
 ##############    链接所有目标文件    #############
 $(BUILD_DIR)/kernel.bin: $(OBJS)
@@ -211,10 +237,10 @@ gdb_symbol:
 
 all: mk_dir mk_img fs_img build hd gdb_symbol
 
-run: all
+run:
 	$(BOCHS) -f bochsrc.bochs
 
-gdb_run: all
+gdb_run:
 	echo '' | $(BOCHS_GDB) \
 		-f bochsrc_gdb.bochs & \
 		gdb -ex "target remote:1234" -ex "symbol-file $(shell pwd)/build/kernel.sym"
